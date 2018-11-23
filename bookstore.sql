@@ -1,72 +1,55 @@
 #图书类别表
 CREATE TABLE booktype(
-	bookTypeId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	parentId INT NOT NULL,
-	bookTypeName VARCHAR(20) NOT NULL,
-	context VARCHAR(40),
-	isDelete INT NOT NULL
+	bookTypeId INT NOT NULL PRIMARY KEY AUTO_INCREMENT, #图书类别
+	bookTypeName VARCHAR(20) NOT NULL, #图书类别名
+	context VARCHAR(40)#图书类别内容简介
 );
 
 
 #图书基本信息表
 CREATE TABLE bookinfo(
-	bookId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	bookName VARCHAR(20) NOT NULL,
-	booktypeId INT NOT NULL,
-	author VARCHAR(20) NOT NULL,
-	pbName VARCHAR(20) NOT NULL,
-	context VARCHAR(200) NOT NULL,	
-	smallImg VARCHAR(20) NOT NULL,
-	bigImg VARCHAR(20) NOT NULL,
-	price NUMERIC NOT NULL,
-	pbdate DATE NOT NULL,
-	hyprice NUMERIC NOT NULL,
-	bookStates INT NOT NULL, 
-	sjdate DATE,
-	num INT NOT NULL,
-	saleCount INT NOT NULL
+	bookId INT NOT NULL PRIMARY KEY AUTO_INCREMENT, #图书id
+	bookName VARCHAR(20) NOT NULL, # 图书名
+	booktypeId INT NOT NULL, # 图书类别
+	author VARCHAR(20) NOT NULL, #作者
+	pbName VARCHAR(20) NOT NULL, # 出版社
+	context VARCHAR(200) NOT NULL,	#内容 
+	smallImg VARCHAR(50) NOT NULL,#展示的小图片例如picture.jpg 图片需要放在本地文件夹或者 网上的一些图片，超链接
+	price NUMERIC NOT NULL, #价格
+	pbdate DATE NOT NULL, #出版日期
+	booknum INT NOT NULL #图书数量
 );
 
-#用户基本信息表
-CREATE TABLE customerinfo(
-	custId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	custName VARCHAR(100) NOT NULL,
-	pwd VARCHAR(20) NOT NULL,
-	email VARCHAR(20) NOT NULL
-)
 
 #用户详细信息表
-CREATE TABLE customerdetailinfo(
+CREATE TABLE customerinfo(
 	custId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	custName VARCHAR(100) NOT NULL unique,
+	pwd VARCHAR(20) NOT NULL,
+	email VARCHAR(20) NOT NULL,	
 	tel VARCHAR(13) NOT NULL,
-	address VARCHAR(20),
-	sex INT NOT NULL,
-	age INT,
-	countMoney NUMERIC,#累计消费金额
-	qq VARCHAR(20)
+	sex VARCHAR(2) NOT NULL,
+	age INT NOT NULL,
+	balance NUMERIC #余额
 );
 
 #书评表
 CREATE TABLE bookdiscuss (
 	disId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	bookId INT NOT NULL,
-	custId INT NOT NULL,
-	context VARCHAR(100) NOT NULL,
-	states INT NOT NULL
+	booktypeId INT NOT NULL, #图书类别id
+	custId INT NOT NULL, #用户
+	context VARCHAR(100) NOT NULL #内容
 );
 
 
 #购物车表
 CREATE TABLE cart(
-	favoriteId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	cartId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	bookId INT NOT NULL,
 	custId INT NOT NULL,
-	scdate DATE NOT NULL,
-	booknum INT NOT NULL,
-	context VARCHAR(100)
+	scdate DATE NOT NULL, #添加时间
+	booknum INT NOT NULL#图书数量
 );
-
-
 
 #管理员表
 CREATE TABLE sysadmin(
@@ -78,22 +61,14 @@ CREATE TABLE sysadmin(
 
 #订单主表
 CREATE TABLE ordermain(
-	orderNum VARCHAR(20) NOT NULL PRIMARY KEY,
+	orderNum int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	customerId INT NOT NULL,
-	customerName VARCHAR(20),
-	tel VARCHAR(20) NOT NULL,
-	address VARCHAR(100) NOT NULL,
-	xsstatus VARCHAR(1), #销售状态 （0-未处理，1-已处理，2-以发货，3-已收货）
-	adminId INT,
-	context VARCHAR(100),
-	sumprice NUMERIC NOT NULL
-);
-
-#订单明细表
-CREATE TABLE orderdetail (
-	detail INT NOT NULL PRIMARY KEY,#明细编号
-	orderNum VARCHAR(20) NOT NULL,#主表id
 	bookId INT NOT NULL,
-	num INT NOT NULL #订购数量
+	num INT NOT NULL,#订购数量
+	xsstatus VARCHAR(1) #订单状态 （0-未处理，1-已处理，2-以发货，3-已收货）
 );
 
+CREATE TABLE news(
+	newsid int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	news VARCHAR(100) NOT NULL
+)
